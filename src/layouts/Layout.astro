@@ -1,0 +1,63 @@
+---
+import BackToTop from "../components/BackToTop.astro";
+import Container from "../components/Container.astro";
+import Head from "../components/Head.astro";
+import Link from "../components/Link.astro";
+import ThemeSwitch from "../components/ThemeSwitch.astro";
+import { SITE } from "../constants";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
+const CURRENT_YEAR = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Head title={`${title} | ${SITE.NAME}`} description={description} />
+  </head>
+  <body>
+    <header>
+      <Container>
+        <div class="flex flex-wrap gap-y-2 justify-between">
+          <Link href="/" underline={false}>
+            <div class="font-semibold">
+              {SITE.NAME}
+            </div>
+          </Link>
+          <nav class="flex gap-1">
+            <Link href="/blog"> blog </Link>
+            <span>
+              {`/`}
+            </span>
+            <Link href="/work"> work </Link>
+          </nav>
+          <ThemeSwitch />
+        </div>
+      </Container>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="animate">
+      <Container>
+        <div class="relative">
+          <div class="absolute right-0 -top-20">
+            <BackToTop />
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div>
+            &copy; {CURRENT_YEAR}
+            {`|`}
+            {SITE.NAME}
+          </div>
+        </div>
+      </Container>
+    </footer>
+  </body>
+</html>
