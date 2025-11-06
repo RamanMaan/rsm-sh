@@ -1,6 +1,5 @@
 ---
 import BackToTop from "../components/BackToTop.astro";
-import Container from "../components/Container.astro";
 import Head from "../components/Head.astro";
 import Link from "../components/Link.astro";
 import ThemeSwitch from "../components/ThemeSwitch.astro";
@@ -21,8 +20,8 @@ const CURRENT_YEAR = new Date().getFullYear();
     <Head title={`${title} | ${SITE.NAME}`} description={description} />
   </head>
   <body>
-    <header>
-      <Container>
+    <header class="fixed top-0 left-0 right-0 z-50 py-5 backdrop-blur-sm">
+      <div class="mx-auto max-w-screen-sm px-5">
         <div class="flex flex-wrap gap-y-2 justify-between">
           <Link href="/" underline={false}>
             <div class="font-semibold">
@@ -38,13 +37,13 @@ const CURRENT_YEAR = new Date().getFullYear();
           </nav>
           <ThemeSwitch />
         </div>
-      </Container>
+      </div>
     </header>
-    <main>
+    <main class="flex-1 pt-32 pb-24">
       <slot />
     </main>
-    <footer class="animate">
-      <Container>
+    <footer class="animate py-5 text-sm">
+      <div class="mx-auto max-w-screen-sm px-5">
         <div class="relative">
           <div class="absolute right-0 -top-20">
             <BackToTop />
@@ -57,7 +56,7 @@ const CURRENT_YEAR = new Date().getFullYear();
             {SITE.NAME}
           </div>
         </div>
-      </Container>
+      </div>
     </footer>
   </body>
 </html>

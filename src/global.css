@@ -5,56 +5,45 @@
 
 @theme {
   --font-sans: "Inter", sans-serif;
-  --font-serif: "Lora", serif;
   --font-mono: "Fira Code", monospace;
 
-  --text-color-primary: #000000;
-  --background-color-primary: #f5f5f4;
-}
-
-.dark {
-  --text-color-primary: #ffffff;
-  --background-color-primary: #1c1917;
+  --text-color-primary: theme(colors.neutral.950);
+  --text-color-secondary: theme(colors.neutral.600);
+  --border-color-base: theme(colors.neutral.200);
+  --background-color-base: theme(colors.neutral.50);
+  --background-color-interactive: theme(colors.neutral.100);
+  --color-accent: theme(colors.sky.500);
+  --color-accent-hover: theme(colors.sky.600);
 }
 
 html {
   overflow-y: scroll;
   color-scheme: light;
-  @apply text-primary bg-primary;
+  @apply text-primary bg-base size-full font-sans antialiased;
 }
 
 html.dark {
   color-scheme: dark;
+  --text-color-primary: theme(colors.neutral.50);
+  --text-color-secondary: theme(colors.neutral.400);
+  --background-color-base: theme(colors.zinc.800);
+  --background-color-interactive: theme(colors.neutral.900);
+  --color-accent: theme(colors.sky.400);
+  --color-accent-hover: theme(colors.sky.300);
 }
 
-html,
 body {
   @apply size-full;
-}
-
-body {
-  @apply font-sans antialiased;
   @apply flex flex-col;
-  @apply text-primary;
 }
 
-header {
-  @apply fixed top-0 left-0 right-0 z-50 py-5;
-  @apply backdrop-blur-sm;
-}
-
-main {
-  @apply flex-1 py-32;
-}
-
-footer {
-  @apply py-5 text-sm;
+button {
+  @apply cursor-pointer;
 }
 
 article {
   @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
-  @apply prose-headings:font-semibold prose-p:font-serif;
-  @apply prose-headings:text-black prose-headings:dark:text-white;
+  @apply prose-headings:font-semibold;
 
   a {
     @apply font-sans text-current underline underline-offset-2;
@@ -69,10 +58,11 @@ article {
 
 .animate {
   @media (prefers-reduced-motion: no-preference) {
-    @apply opacity-0 translate-y-3;
-    @apply transition-all duration-700 ease-out;
+    /* @apply opacity-0 translate-y-3; */
+    @apply transition-all ease-out;
   }
 
+  /* TODO - this makes us require JS */
   &.show {
     @apply opacity-100 translate-y-0;
   }

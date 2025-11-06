@@ -1,7 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import ArrowCard from "../components/ArrowCard.astro";
-import Container from "../components/Container.astro";
 import Link from "../components/Link.astro";
 import { HOME, SITE } from "../constants";
 import Layout from "../layouts/Layout.astro";
@@ -29,51 +28,23 @@ const work = await Promise.all(
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
-  <Container>
-    <h4 class="animate font-semibold text-black dark:text-white">
-      Hi, I'm Nano <span class="text-xl">👋🏻</span>
-    </h4>
-    <div class="space-y-16">
-      <section>
-        <article class="space-y-4">
-          <p class="animate">
-            I am a minimal, seo friendly, accessible portfolio and blog for
-            developers. I am an even more lightweight version of my popular
-            theme
-            <Link
-              href="https://github.com/markhorn-dev/astro-sphere"
-              aria-label="Astro Sphere on Github"
-              external
-            >
-              Astro Sphere
-            </Link>. I have a lighthouse scores of 100 across the board for
-            performance, accesibility, best practices and SEO.
-          </p>
-          <p class="animate">
-            I come packed with full type safety, a sitemap, an rss feed,
-            markdown and mdx support (use components in your markdown) through
-            astro integrations. I am styled with tailwind and come preconfigured
-            with light, dark and system/os theme preferences out of the box.
-          </p>
-          <p class="animate">
-            Visit
-            <Link
-              href="https://github.com/markhorn-dev/astro-nano"
-              aria-label="Astro Nano on Github"
-              external
-            >
-              Astro Nano on Github
-            </Link>
-            to fork the repository, read the docs or one-click deploy on Vercel or
-            Netlify.
+  <div class="mx-auto max-w-screen-sm px-5">
+    <h4 class="animate font-semibold">Raman Maan</h4>
+    <h5 class="animate italic text-secondary">pronounced "rum"-"in"</h5>
+    <div class="flex flex-col gap-16">
+      <section class="animate">
+        <article>
+          <p>
+            This is a scratch space to play around with ideas and experiments. I
+            might even try and write a blog post or two.
           </p>
         </article>
       </section>
 
-      <section class="animate space-y-6">
+      <section class="animate flex flex-col gap-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">Latest posts</h5>
-          <Link href="/blog"> See all posts </Link>
+          <h5 class="font-semibold">Latest posts</h5>
+          <Link href="/blog">See all posts</Link>
         </div>
         <ul class="flex flex-col gap-4">
           {
@@ -86,24 +57,20 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class="animate space-y-6">
+      <section class="animate flex flex-col gap-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold text-black dark:text-white">
-            Work Experience
-          </h5>
+          <h5 class="font-semibold">Work Experience</h5>
           <Link href="/work"> See all work </Link>
         </div>
-        <ul class="flex flex-col space-y-4">
+        <ul class="flex flex-col gap-4">
           {
             work.map((entry) => (
               <li>
-                <div class="text-sm opacity-75">
+                <div class="text-sm text-secondary">
                   {dateRange(entry.data.dateStart, entry.data.dateEnd)}
                 </div>
-                <div class="font-semibold text-black dark:text-white">
-                  {entry.data.company}
-                </div>
-                <div class="text-sm opacity-75">{entry.data.role}</div>
+                <div class="font-semibold">{entry.data.company}</div>
+                <div class="text-sm text-secondary">{entry.data.role}</div>
                 <article>
                   <entry.Content />
                 </article>
@@ -113,14 +80,7 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class="animate space-y-4">
-        <h5 class="font-semibold text-black dark:text-white">Let's Connect</h5>
-        <article>
-          <p>
-            If you want to get in touch with me about something or just to say
-            hi, reach out on social media or send me an email.
-          </p>
-        </article>
+      <section class="animate">
         <ul class="flex flex-wrap gap-(--gap) [--gap:8px]">
           {
             [
@@ -128,18 +88,11 @@ const work = await Promise.all(
                 name: "github",
                 href: "https://github.com/ramanmaan",
                 "aria-label": "Raman Maan on Github",
-                external: true,
               },
               {
                 name: "linkedin",
                 href: "https://www.linkedin.com/in/ramanmaan",
                 "aria-label": "Raman Maan on LinkedIn",
-                external: true,
-              },
-              {
-                name: "email",
-                href: "mailto:me@rsm.sh",
-                "aria-label": "Email me@rsm.sh",
               },
             ].map((props, i, arr) => (
               <li class="flex gap-x-(--gap) text-nowrap">
@@ -153,5 +106,5 @@ const work = await Promise.all(
         </ul>
       </section>
     </div>
-  </Container>
+  </div>
 </Layout>
