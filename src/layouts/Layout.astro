@@ -3,7 +3,6 @@ import BackToTop from "../components/BackToTop.astro";
 import Head from "../components/Head.astro";
 import Link from "../components/Link.astro";
 import ThemeSwitch from "../components/ThemeSwitch.astro";
-import { SITE } from "../constants";
 
 type Props = {
   title: string;
@@ -17,7 +16,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 <!doctype html>
 <html lang="en">
   <head>
-    <Head title={`${title} | ${SITE.NAME}`} description={description} />
+    <Head title={`${title} | rsm.sh`} description={description} />
   </head>
   <body>
     <header class="fixed top-0 left-0 right-0 z-50 py-5 backdrop-blur-sm">
@@ -25,7 +24,7 @@ const CURRENT_YEAR = new Date().getFullYear();
         <div class="flex flex-wrap gap-y-2 justify-between">
           <Link href="/" underline={false}>
             <div class="font-semibold">
-              {SITE.NAME}
+              rsm.sh
             </div>
           </Link>
           <nav class="flex gap-1">
@@ -53,7 +52,7 @@ const CURRENT_YEAR = new Date().getFullYear();
           <div>
             &copy; {CURRENT_YEAR}
             {`|`}
-            {SITE.NAME}
+            rsm.sh
           </div>
         </div>
       </div>

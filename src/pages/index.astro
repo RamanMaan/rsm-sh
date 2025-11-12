@@ -2,14 +2,16 @@
 import { getCollection } from "astro:content";
 import ArrowCard from "../components/ArrowCard.astro";
 import Link from "../components/Link.astro";
-import { HOME, SITE } from "../constants";
 import Layout from "../layouts/Layout.astro";
 import { dateRange } from "../utils";
+
+const NUM_POSTS_ON_HOMEPAGE = 3;
+const NUM_WORKS_ON_HOMEPAGE = 2;
 
 const blog = (await getCollection("blog"))
   .filter((post) => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+  .slice(0, NUM_POSTS_ON_HOMEPAGE);
 
 const allwork = (await getCollection("work"))
   .sort(
@@ -17,7 +19,7 @@ const allwork = (await getCollection("work"))
       new Date(b.data.dateStart).valueOf() -
       new Date(a.data.dateStart).valueOf()
   )
-  .slice(0, SITE.NUM_WORKS_ON_HOMEPAGE);
+  .slice(0, NUM_WORKS_ON_HOMEPAGE);
 
 const work = await Promise.all(
   allwork.map(async (item) => {
@@ -27,7 +29,7 @@ const work = await Promise.all(
 );
 ---
 
-<Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+<Layout title="Home" description="Raman Maan's personal website.">
   <div class="mx-auto max-w-screen-sm px-5">
     <h4 class="animate font-semibold">Raman Maan</h4>
     <h5 class="animate italic text-secondary">pronounced "rum"-"in"</h5>

@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+
+const collection = (await getCollection("work")).sort(
+  (a, b) =>
+    new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf()
+);
+
+// sorted from most recent to oldest
+const work = await Promise.all(
+  collection.map(async (item) => {
+    const { Content } = await item.render();
+    return { ...item, Content };
+  })
+);
+const oldestYear = work[work.length - 1].data.dateStart.getFullYear();
+const latestYear = new Date().getFullYear();
+const differenceInYears = latestYear - oldestYear;
+const FirstWorkContent = work[0].Content;
+---
+
+<div
+  class="relative grid grid-cols-[auto_1fr] h-[400px] gap-2"
+  style={`--rows: ${differenceInYears}; --year-height: minmax(0,1fr);`}
+  data-id="calendar"
+>
+  <div
+    data-id="timeline"
+    class="grid grid-rows-[repeat(var(--rows),var(--year-height))]"
+  >
+    {
+      Array.from({ length: differenceInYears }, (_, index) => (
+        <span>{latestYear - index}</span>
+      ))
+    }
+  </div>
+  <div class="grid col-2" data-id="day">
+    <div class="grid grid-rows-[repeat(var(--rows),var(--year-height))]">
+      <div class="border row-start-2 row-end-5">
+        <div class="font-semibold text-primary">{work[0].data.company}</div>
+        <div class="text-sm text-secondary">{work[0].data.role}</div>
+        <div class="text-xs">
+          {work[0].data.dateStart.toLocaleString("default", { month: "short" })}
+          {work[0].data.dateEnd.toLocaleString("default", { month: "short" })}
+          <FirstWorkContent />
+        </div>
+      </div>
+      <div class="border row-start-5 row-end-9">HubSpot</div>
+    </div>
+  </div>
+</div>

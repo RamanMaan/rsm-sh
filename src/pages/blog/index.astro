@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import ArrowCard from "../../components/ArrowCard.astro";
 import Container from "../../components/Container.astro";
-import { BLOG } from "../../constants";
 import Layout from "../../layouts/Layout.astro";
 
 const data = (await getCollection("blog"))
@@ -27,7 +26,7 @@ const years = Object.keys(posts).sort(
 );
 ---
 
-<Layout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
+<Layout title="Writings" description="A collection of articles on topics I am passionate about.">
   <Container>
     <div class="space-y-10">
       <div class="animate font-semibold text-primary">Blog</div>

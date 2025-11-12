@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Container from "../components/Container.astro";
-import { WORK } from "../constants";
+import WorkCalendar from "../components/WorkCalendar.astro";
 import Layout from "../layouts/Layout.astro";
 import { dateRange } from "../utils";
 
@@ -18,11 +18,12 @@ const work = await Promise.all(
 );
 ---
 
-<Layout title={WORK.TITLE} description={WORK.DESCRIPTION}>
+<Layout title="Work" description="Where I have worked and what I have done.">
   <Container>
-    <div class="space-y-10">
+    <div class="flex flex-col gap-6">
       <div class="animate font-semibold text-primary">Work</div>
-      <ul class="flex flex-col space-y-4">
+      <WorkCalendar />
+      <ul class="flex flex-col gap-4">
         {
           work.map((entry) => (
             <li class="animate">
