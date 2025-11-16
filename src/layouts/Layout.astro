@@ -23,9 +23,7 @@ const CURRENT_YEAR = new Date().getFullYear();
       <div class="mx-auto max-w-screen-sm px-5">
         <div class="flex flex-wrap gap-y-2 justify-between">
           <Link href="/" underline={false}>
-            <div class="font-semibold">
-              rsm.sh
-            </div>
+            <div class="font-semibold">rsm.sh</div>
           </Link>
           <nav class="flex gap-1">
             <Link href="/blog"> blog </Link>
@@ -38,22 +36,20 @@ const CURRENT_YEAR = new Date().getFullYear();
         </div>
       </div>
     </header>
-    <main class="flex-1 pt-32 pb-24">
+    <main class="flex-1 pt-32 pb-24 relative">
       <slot />
+      <div class="fixed bottom-4 right-4">
+        <BackToTop />
+      </div>
     </main>
-    <footer class="animate py-5 text-sm">
-      <div class="mx-auto max-w-screen-sm px-5">
-        <div class="relative">
-          <div class="absolute right-0 -top-20">
-            <BackToTop />
-          </div>
-        </div>
-        <div class="flex justify-between items-center">
-          <div>
-            &copy; {CURRENT_YEAR}
-            {`|`}
-            rsm.sh
-          </div>
+    <footer class="py-5 text-sm">
+      <div
+        class="mx-auto max-w-screen-sm px-5"
+      >
+        <div>
+          &copy; {CURRENT_YEAR}
+          {`|`}
+          rsm.sh
         </div>
       </div>
     </footer>

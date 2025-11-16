@@ -13,39 +13,97 @@ const work = await Promise.all(
     return { ...item, Content };
   })
 );
-const oldestYear = work[work.length - 1].data.dateStart.getFullYear();
-const latestYear = new Date().getFullYear();
-const differenceInYears = latestYear - oldestYear;
-const FirstWorkContent = work[0].Content;
+
+const oldestDate = work[work.length - 1].data.dateStart;
+const currentDate = new Date();
+
+// Calculate total months from oldest to latest
+const oldestYear = oldestDate.getFullYear();
+const oldestMonth = oldestDate.getMonth();
+const latestYear = currentDate.getFullYear();
+const latestMonth = currentDate.getMonth();
+
+const totalMonths =
+  (latestYear - oldestYear) * 12 + (latestMonth - oldestMonth) + 1;
+
+// Helper function to calculate month position from current date (top of grid)
+const getMonthPosition = (date: Date) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  return (latestYear - year) * 12 + (latestMonth - month) + 1;
+};
+
+// Generate year markers with their positions
+const differenceInYears = latestYear - oldestYear + 1;
+const yearMarkers = Array.from({ length: differenceInYears }, (_, index) => {
+  const year = latestYear - index;
+  // Calculate which month row this year starts at (from the top)
+  const monthsFromTop = (latestYear - year) * 12 + (12 - latestMonth - 1);
+  const startRow = monthsFromTop;
+  const span =
+    year === latestYear
+      ? latestMonth + 1
+      : year === oldestYear
+        ? 12 - oldestMonth
+        : 12;
+  return { year, startRow, span };
+});
 ---
 
 <div
-  class="relative grid grid-cols-[auto_1fr] h-[400px] gap-2"
-  style={`--rows: ${differenceInYears}; --year-height: minmax(0,1fr);`}
+  class="relative grid grid-cols-[auto_1fr] gap-2"
+  style={`--rows: ${totalMonths}; --month-height: 3px; --gap-y: 4px;`}
   data-id="calendar"
 >
   <div
     data-id="timeline"
-    class="grid grid-rows-[repeat(var(--rows),var(--year-height))]"
+    class="grid grid-rows-[repeat(var(--rows),var(--month-height))] gap-y-(--gap-y)"
   >
     {
-      Array.from({ length: differenceInYears }, (_, index) => (
-        <span>{latestYear - index}</span>
+      yearMarkers.map(({ year, startRow, span }) => (
+        <span
+          class="flex justify-end pr-2"
+          style={`grid-row: ${startRow} / span ${span};`}
+        >
+          {year}
+        </span>
       ))
     }
   </div>
   <div class="grid col-2" data-id="day">
-    <div class="grid grid-rows-[repeat(var(--rows),var(--year-height))]">
-      <div class="border row-start-2 row-end-5">
-        <div class="font-semibold text-primary">{work[0].data.company}</div>
-        <div class="text-sm text-secondary">{work[0].data.role}</div>
-        <div class="text-xs">
-          {work[0].data.dateStart.toLocaleString("default", { month: "short" })}
-          {work[0].data.dateEnd.toLocaleString("default", { month: "short" })}
-          <FirstWorkContent />
-        </div>
-      </div>
-      <div class="border row-start-5 row-end-9">HubSpot</div>
+    <div
+      class="grid grid-rows-[repeat(var(--rows),var(--month-height))] gap-y-(--gap-y)"
+    >
+      {
+        work.map((entry) => {
+          // Calculate month positions from the current date (top of grid = row 1)
+          const endDate =
+            entry.data.dateEnd === "Current" ? currentDate : entry.data.dateEnd;
+          const endMonth = getMonthPosition(endDate);
+          const startMonth = getMonthPosition(entry.data.dateStart);
+
+          return (
+            <div
+              class="flex ring-1 px-2 py-1 rounded-md gap-2 items-center"
+              style={`grid-row: ${endMonth} / ${startMonth + 1};`}
+            >
+              <div class="font-semibold text-primary">{entry.data.company}</div>
+              <div class="text-sm text-secondary">{entry.data.role}</div>
+              <div class="text-xs ml-auto">
+                {entry.data.dateStart.toLocaleString("default", {
+                  month: "short",
+                })}
+                {" - "}
+                {entry.data.dateEnd === "Current"
+                  ? "Current"
+                  : entry.data.dateEnd.toLocaleString("default", {
+                      month: "short",
+                    })}
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
   </div>
 </div>
