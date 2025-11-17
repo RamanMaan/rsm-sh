@@ -3,7 +3,7 @@ import { getCollection } from "astro:content";
 import ArrowCard from "../components/ArrowCard.astro";
 import Link from "../components/Link.astro";
 import Layout from "../layouts/Layout.astro";
-import { dateRange } from "../utils";
+import WorkEntryHeader from "../components/work/WorkEntryHeader.astro";
 
 const NUM_POSTS_ON_HOMEPAGE = 3;
 const NUM_WORKS_ON_HOMEPAGE = 2;
@@ -31,10 +31,10 @@ const work = await Promise.all(
 
 <Layout title="Home" description="Raman Maan's personal website.">
   <div class="mx-auto max-w-screen-sm px-5">
-    <h4 class="animate font-semibold">Raman S. Maan</h4>
-    <h5 class="animate italic text-secondary">pronounced "rum"-"in"</h5>
+    <h4 class="font-semibold">Raman S. Maan</h4>
+    <h5 class="italic text-secondary">pronounced "rum"-"in"</h5>
     <div class="flex flex-col gap-16">
-      <section class="animate">
+      <section>
         <article>
           <p>
             This is a scratch space to play around with ideas and experiments. I
@@ -43,9 +43,9 @@ const work = await Promise.all(
         </article>
       </section>
 
-      <section class="animate flex flex-col gap-6">
+      <section class="flex flex-col gap-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
-          <h5 class="font-semibold">Latest posts</h5>
+          <h5 class="font-semibold">Blog</h5>
           <Link href="/blog">See all posts</Link>
         </div>
         <ul class="flex flex-col gap-4">
@@ -59,30 +59,23 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class="animate flex flex-col gap-6">
+      <section class="flex flex-col gap-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
           <h5 class="font-semibold">Work Experience</h5>
-          <Link href="/work"> See all work </Link>
+          <Link href="/work">See all work </Link>
         </div>
         <ul class="flex flex-col gap-4">
           {
             work.map((entry) => (
               <li>
-                <div class="text-sm text-secondary">
-                  {dateRange(entry.data.dateStart, entry.data.dateEnd)}
-                </div>
-                <div class="font-semibold">{entry.data.company}</div>
-                <div class="text-sm text-secondary">{entry.data.role}</div>
-                <article>
-                  <entry.Content />
-                </article>
+                <WorkEntryHeader entry={entry} />
               </li>
             ))
           }
         </ul>
       </section>
 
-      <section class="animate">
+      <section>
         <ul class="flex flex-wrap gap-(--gap) [--gap:8px]">
           {
             [

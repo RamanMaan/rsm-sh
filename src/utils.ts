@@ -13,21 +13,27 @@ export function readingTime(html: string) {
   return `${readingTimeMinutes} min read`;
 }
 
-export function dateRange(startDate: Date, endDate?: Date | "Current"): string {
-  const startMonth = startDate.toLocaleString("default", { month: "short" });
-  const startYear = startDate.getFullYear().toString();
-  let endMonth = "";
-  let endYear = "";
+export function dateRange(startDate: Date, endDate: Date | "Current"): string {
+  const normalizedEndDate = endDate === "Current" ? new Date() : endDate;
 
-  if (endDate) {
-    if (typeof endDate === "string") {
-      endMonth = "";
-      endYear = endDate;
-    } else {
-      endMonth = endDate.toLocaleString("default", { month: "short" });
-      endYear = endDate.getFullYear().toString();
-    }
-  }
+  const differenceInMonths =
+    normalizedEndDate.getMonth() -
+    startDate.getMonth() +
+    12 * (normalizedEndDate.getFullYear() - startDate.getFullYear());
 
-  return `${startMonth}${startYear} - ${endMonth}${endYear}`;
+  const differenceInYears = (differenceInMonths / 12).toFixed(1);
+
+  return `${startDate.toLocaleString("default", {
+    month: "short",
+  })} ${startDate.getFullYear()} - ${
+    endDate === "Current"
+      ? "Present"
+      : `${normalizedEndDate.toLocaleString("default", {
+          month: "short",
+        })} ${normalizedEndDate.getFullYear()}`
+  } (${
+    differenceInMonths < 12
+      ? `${differenceInMonths} month${differenceInMonths === 1 ? "" : "s"}`
+      : `${differenceInYears} year${differenceInYears === "1" ? "" : "s"}`
+  })`;
 }

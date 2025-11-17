@@ -1,0 +1,29 @@
+---
+import { type DataEntryMap } from "astro:content";
+import { dateRange } from "../../utils";
+
+type Props = {
+  entry: DataEntryMap["work"][number];
+};
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<div
+  class="flex flex-col"
+  transition:name={`work-entry-${entry.slug}`}
+>
+  <div class="text-sm text-secondary">
+    {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+  </div>
+  <div class="font-semibold text-primary">
+    {entry.data.company}
+  </div>
+  <div class="text-sm text-secondary">
+    {entry.data.role}
+  </div>
+  <article>
+    <Content />
+  </article>
+</div>

@@ -3,6 +3,8 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+
 @theme {
   --font-sans: "Inter", sans-serif;
   --font-mono: "Fira Code", monospace;
@@ -24,14 +26,14 @@ html {
   @apply text-primary bg-base size-full font-sans antialiased;
 }
 
-#back-to-top {
+.visible-on-scroll-only {
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease-out;
 }
 
 @container scroller scroll-state(scrollable: top) {
-  #back-to-top {
+  .visible-on-scroll-only {
     opacity: 1;
     pointer-events: auto;
   }
