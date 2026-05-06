@@ -1,12 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import WorkCalendar from "../components/WorkCalendar.astro";
+import WorkEntryHeader from "../components/WorkEntryHeader.astro";
 import Layout from "../layouts/Layout.astro";
-import WorkEntryHeader from "../components/work/WorkEntryHeader.astro";
 
 const collection = (await getCollection("work")).sort(
   (a, b) =>
-    new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf()
+    new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf(),
 );
 ---
 
@@ -23,7 +22,6 @@ const collection = (await getCollection("work")).sort(
           ))
         }
       </ul>
-      <WorkCalendar />
     </div>
   </div>
 </Layout>

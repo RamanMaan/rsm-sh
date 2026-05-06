@@ -34,7 +34,7 @@ const work = defineCollection({
       .string()
       .refine(
         (val) => val === "Current" || /^\d{2}\/\d{4}$/.test(val),
-        "Date must be in MM/YYYY format or 'Current'"
+        "Date must be in MM/YYYY format or 'Current'",
       )
       .transform((val) => (val === "Current" ? "Current" : mmYyyyToDate(val))),
   }),

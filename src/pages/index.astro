@@ -2,8 +2,8 @@
 import { getCollection } from "astro:content";
 import ArrowCard from "../components/ArrowCard.astro";
 import Link from "../components/Link.astro";
+import WorkEntryHeader from "../components/WorkEntryHeader.astro";
 import Layout from "../layouts/Layout.astro";
-import WorkEntryHeader from "../components/work/WorkEntryHeader.astro";
 
 const NUM_POSTS_ON_HOMEPAGE = 3;
 const NUM_WORKS_ON_HOMEPAGE = 2;
@@ -17,7 +17,7 @@ const allwork = (await getCollection("work"))
   .sort(
     (a, b) =>
       new Date(b.data.dateStart).valueOf() -
-      new Date(a.data.dateStart).valueOf()
+      new Date(a.data.dateStart).valueOf(),
   )
   .slice(0, NUM_WORKS_ON_HOMEPAGE);
 
@@ -25,7 +25,7 @@ const work = await Promise.all(
   allwork.map(async (item) => {
     const { Content } = await item.render();
     return { ...item, Content };
-  })
+  }),
 );
 ---
 
@@ -41,6 +41,63 @@ const work = await Promise.all(
             might even try and write a blog post or two.
           </p>
         </article>
+      </section>
+
+      <section class="flex flex-col gap-6">
+        <h5 class="font-semibold">Theme Showcase</h5>
+
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="flex flex-col gap-1.5">
+            <div class="h-10 rounded-md bg-(--color-accent)"></div>
+            <span class="text-xs text-secondary">accent</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-10 rounded-md bg-(--color-accent-hover)"></div>
+            <span class="text-xs text-secondary">accent hover</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div
+              class="h-10 rounded-md border border-(--border-color-base) bg-(--background-color-interactive)"
+            >
+            </div>
+            <span class="text-xs text-secondary">interactive</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div
+              class="h-10 rounded-md border border-(--border-color-base) bg-(--background-color-base)"
+            >
+            </div>
+            <span class="text-xs text-secondary">base</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+          <button
+            class="rounded-lg bg-(--color-accent) hover:bg-(--color-accent-hover) text-white px-4 py-2 text-sm font-semibold transition-colors"
+          >
+            Primary
+          </button>
+          <button
+            class="rounded-lg border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-white px-4 py-2 text-sm font-semibold transition-colors"
+          >
+            Outline
+          </button>
+          <button
+            class="rounded-lg bg-(--background-color-interactive) border border-(--border-color-base) text-primary px-4 py-2 text-sm transition-colors hover:brightness-95"
+          >
+            Ghost
+          </button>
+        </div>
+
+        <div
+          class="rounded-lg border border-(--border-color-base) bg-(--background-color-interactive) p-4 flex flex-col gap-2"
+        >
+          <span class="text-primary font-semibold text-sm">Card title — text-color-primary</span>
+          <span class="text-secondary text-sm"
+            >Description — text-color-secondary, derived at 55% alpha from primary.</span
+          >
+          <span class="text-(--color-accent) text-sm font-semibold">Accent link →</span>
+        </div>
       </section>
 
       <section class="flex flex-col gap-6">
