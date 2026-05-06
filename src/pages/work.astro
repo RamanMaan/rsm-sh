@@ -2,10 +2,12 @@
 import { getCollection } from "astro:content";
 import WorkEntryHeader from "../components/WorkEntryHeader.astro";
 import Layout from "../layouts/Layout.astro";
+import { companyDateRange } from "../utils";
 
 const collection = (await getCollection("work")).sort(
   (a, b) =>
-    new Date(b.data.dateStart).valueOf() - new Date(a.data.dateStart).valueOf(),
+    companyDateRange(b.data.roles).startDate.valueOf() -
+    companyDateRange(a.data.roles).startDate.valueOf(),
 );
 ---
 

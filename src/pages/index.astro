@@ -5,6 +5,7 @@ import ArrowCard from "../components/ArrowCard.astro";
 import Link from "../components/Link.astro";
 import WorkEntryHeader from "../components/WorkEntryHeader.astro";
 import Layout from "../layouts/Layout.astro";
+import { companyDateRange } from "../utils";
 
 const NUM_POSTS_ON_HOMEPAGE = 3;
 const NUM_WORKS_ON_HOMEPAGE = 2;
@@ -14,20 +15,13 @@ const blog = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, NUM_POSTS_ON_HOMEPAGE);
 
-const allwork = (await getCollection("work"))
+const work = (await getCollection("work"))
   .sort(
     (a, b) =>
-      new Date(b.data.dateStart).valueOf() -
-      new Date(a.data.dateStart).valueOf(),
+      companyDateRange(b.data.roles).startDate.valueOf() -
+      companyDateRange(a.data.roles).startDate.valueOf(),
   )
   .slice(0, NUM_WORKS_ON_HOMEPAGE);
-
-const work = await Promise.all(
-  allwork.map(async (item) => {
-    const { Content } = await item.render();
-    return { ...item, Content };
-  }),
-);
 ---
 
 <Layout title="Home" description="Raman Maan's personal website.">

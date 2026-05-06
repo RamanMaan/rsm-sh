@@ -21,22 +21,30 @@ const mmYyyyToDate = (val: string) => {
   return newDate;
 };
 
+const dateStart = z
+  .string()
+  .regex(/^\d{2}\/\d{4}$/, "Date must be in MM/YYYY format")
+  .transform(mmYyyyToDate);
+
+const dateEnd = z
+  .string()
+  .refine(
+    (val) => val === "Current" || /^\d{2}\/\d{4}$/.test(val),
+    "Date must be in MM/YYYY format or 'Current'",
+  )
+  .transform((val) => (val === "Current" ? "Current" : mmYyyyToDate(val)));
+
+const role = z.object({
+  title: z.string(),
+  dateStart,
+  dateEnd,
+});
+
 const work = defineCollection({
   type: "content",
   schema: z.object({
     company: z.string(),
-    role: z.string(),
-    dateStart: z
-      .string()
-      .regex(/^\d{2}\/\d{4}$/, "Date must be in MM/YYYY format")
-      .transform(mmYyyyToDate),
-    dateEnd: z
-      .string()
-      .refine(
-        (val) => val === "Current" || /^\d{2}\/\d{4}$/.test(val),
-        "Date must be in MM/YYYY format or 'Current'",
-      )
-      .transform((val) => (val === "Current" ? "Current" : mmYyyyToDate(val))),
+    roles: z.array(role).min(1),
   }),
 });
 

@@ -1,6 +1,6 @@
 ---
 import { type DataEntryMap } from "astro:content";
-import { dateRange } from "../utils";
+import { companyDateRange, dateRange, shortDateRange } from "../utils";
 
 type Props = {
   entry: DataEntryMap["work"][number];
@@ -8,6 +8,9 @@ type Props = {
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+const { roles, company } = entry.data;
+const { startDate, endDate } = companyDateRange(roles);
+const hasMultipleRoles = roles.length > 1;
 ---
 
 <div
@@ -15,14 +18,23 @@ const { Content } = await entry.render();
   transition:name={`work-entry-${entry.slug}`}
 >
   <div class="text-sm text-secondary">
-    {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+    {dateRange(startDate, endDate)}
   </div>
   <div class="font-semibold text-primary">
-    {entry.data.company}
+    {company}
   </div>
-  <div class="text-sm text-secondary">
-    {entry.data.role}
-  </div>
+  {hasMultipleRoles ? (
+    <ul class="mt-1 flex flex-col gap-0.5">
+      {roles.map((role) => (
+        <li class="flex items-baseline gap-2 text-sm">
+          <span class="text-secondary">{role.title}</span>
+          <span class="text-xs text-tertiary">{shortDateRange(role.dateStart, role.dateEnd)}</span>
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <div class="text-sm text-secondary">{roles[0].title}</div>
+  )}
   <article>
     <Content />
   </article>
