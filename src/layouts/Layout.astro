@@ -24,16 +24,36 @@ const CURRENT_YEAR = new Date().getFullYear();
       <div class="mx-auto max-w-screen-sm px-5">
         <div class="flex flex-wrap gap-y-2 justify-between">
           <Link href="/" underline={false}>
-            <div class="font-semibold">rsm.sh</div>
+          <svg width="200" height="32" viewBox="0 0 200 32" xmlns="http://www.w3.org/2000/svg" style="vertical-align: -0.15em;">
+            <style>
+              .accent {
+                fill: var(--color-accent, #22c55e);
+              }
+              .bg {
+                fill: var(--background-color-2, #020617);
+              }
+              .cursor {
+                animation: blink 1s steps(1) infinite;
+              }
+              @keyframes blink {
+                50% { opacity: 0; }
+              }
+            </style>
+            <rect class="bg" width="200" height="32" rx="6"/>
+            <text x="12" y="22" font-family="Fira Code, monospace" font-size="18" dominant-baseline="alphabetic" class="accent">
+              $ curl rsm.sh
+            </text>
+            <rect x="160" y="7" width="9" height="18" class="accent cursor"/>
+          </svg>
           </Link>
-          <nav class="flex gap-1">
+          <nav class="flex gap-1 items-center">
             <Link href="/blog"> blog </Link>
             <span>
               {`/`}
             </span>
             <Link href="/work"> work </Link>
+            <ThemeSwitch />
           </nav>
-          <ThemeSwitch />
         </div>
       </div>
     </header>

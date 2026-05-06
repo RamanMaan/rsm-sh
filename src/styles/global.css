@@ -9,7 +9,7 @@
 /**
  * Theme Colors
  */
-:root {
+:where(:root), .light {
   color-scheme: light;
 
   /* Seed colors */
@@ -43,6 +43,9 @@
   --color-accent-hover: oklch(
     from var(--color-accent) calc(l + var(--hover-l-shift)) c h
   );
+
+  --dark-only: none;
+  --light-only: block;
 }
 @theme reference {
   --text-color-primary: var(--text-color-primary);
@@ -61,21 +64,27 @@
   --color-accent: oklch(71.1% 0.019 323.02);
   --hover-l-shift: 0.1;
   --depth-l-shift: -0.05;
+  --dark-only: block;
+  --light-only: none;
 }
 @media (prefers-color-scheme: dark) {
-  :root {
+  :where(:root) {
     color-scheme: dark;
     --text-color-primary: oklch(98.5% 0 0);
     --background-color-1: oklch(27.4% 0.006 286.033);
     --color-accent: oklch(71.1% 0.019 323.02);
     --hover-l-shift: 0.1;
     --depth-l-shift: -0.05;
+    --dark-only: block;
+    --light-only: none;
   }
 }
 
+.dark-only { display: var(--dark-only); }
+.light-only { display: var(--light-only); }
+
 html {
   overflow-y: scroll;
-  color-scheme: light;
   container-type: scroll-state;
   container-name: scroller;
   @apply text-primary bg-1 size-full font-sans antialiased;
@@ -117,7 +126,7 @@ button {
 }
 
 article {
-  @apply max-w-full prose dark:prose-invert prose-img:mx-auto prose-img:my-auto;
+  @apply max-w-full prose prose-img:mx-auto prose-img:my-auto;
   @apply prose-headings:font-semibold;
 
   --tw-prose-body: var(--text-color-primary);
@@ -172,7 +181,9 @@ article {
   *,
   *::before,
   *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: to disable motion */
     transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: to disable motion */
     animation-duration: 0.01ms !important;
   }
 }

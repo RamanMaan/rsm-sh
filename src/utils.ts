@@ -32,13 +32,18 @@ function formatDuration(startDate: Date, endDate: Date): string {
 
 export function dateRange(startDate: Date, endDate: Date | "Current"): string {
   const normalizedEndDate = endDate === "Current" ? new Date() : endDate;
-  const endLabel = endDate === "Current" ? "Present" : formatMonthYear(normalizedEndDate);
+  const endLabel =
+    endDate === "Current" ? "Present" : formatMonthYear(normalizedEndDate);
 
   return `${formatMonthYear(startDate)} - ${endLabel} (${formatDuration(startDate, normalizedEndDate)})`;
 }
 
-export function shortDateRange(startDate: Date, endDate: Date | "Current"): string {
-  const endYear = endDate === "Current" ? "Present" : endDate.getFullYear().toString();
+export function shortDateRange(
+  startDate: Date,
+  endDate: Date | "Current",
+): string {
+  const endYear =
+    endDate === "Current" ? "Present" : endDate.getFullYear().toString();
   const startYear = startDate.getFullYear().toString();
 
   if (startYear === endYear) return startYear;

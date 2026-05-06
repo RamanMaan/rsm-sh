@@ -1,0 +1,45 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg {
+      fill: oklch(94.5% 0 0);
+    }
+
+    .accent {
+      fill: oklch(54.2% 0.034 322.5);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .bg {
+        fill: oklch(22.4% 0.006 286.033);
+      }
+
+      .accent {
+        fill: oklch(71.1% 0.019 323.02);
+      }
+    }
+
+    .cursor {
+      animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+  </style>
+
+  <!-- background -->
+  <rect class="bg" width="64" height="64" rx="10"/>
+
+  <!-- text -->
+  <text x="12" y="38"
+        font-family="JetBrains Mono, Fira Code, monospace"
+        font-size="24"
+        dominant-baseline="alphabetic"
+        class="accent">
+    r&gt;
+  </text>
+
+  <!-- cursor -->
+  <rect x="42" y="18" width="6" height="20"
+        class="accent cursor"/>
+</svg>

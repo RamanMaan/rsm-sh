@@ -11,10 +11,10 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       themes: {
-        light: 'github-light-high-contrast',
-        dark: 'github-dark-high-contrast',
+        light: "github-light-high-contrast",
+        dark: "github-dark-high-contrast",
       },
-      defaultColor: 'light-dark()', 
+      defaultColor: "light-dark()",
     },
   },
 

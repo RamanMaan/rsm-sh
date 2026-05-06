@@ -3,7 +3,7 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
 ---
 
 <div
-  class="flex items-center text-secondary *:hover:text-primary *:p-2 *:hover:bg-2 *:transition-colors *:rounded-sm gap-2"
+  class="flex items-center text-secondary *:hover:text-primary *:p-2 *:hover:bg-2 *:transition-colors *:rounded-sm gap-[inherit]"
 >
   <button
     id="themeReset"
@@ -17,11 +17,11 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
   </button>
   <button class="group" id="themeToggle" aria-label="Toggle theme">
     <Sun
-      class="dark:hidden fill-transparent transition-all group-hover:fill-current group-hover:rotate-24"
+      class="dark-only fill-transparent transition-all group-hover:fill-current group-hover:rotate-24"
       size="16"
     />
     <Moon
-      class="hidden dark:block fill-transparent transition-all group-hover:fill-current group-hover:rotate-24"
+      class="light-only fill-transparent transition-all group-hover:fill-current group-hover:rotate-24"
       size="16"
     />
   </button>
@@ -29,74 +29,44 @@ import { Monitor, Moon, Sun } from "@lucide/astro";
 
 <script is:inline>
   const THEME_KEY = "rsm-theme";
+  const darkMQ = matchMedia("(prefers-color-scheme: dark)");
 
-  function getSystemTheme() {
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
+  function getOverride() {
+    try {
+      const v = localStorage.getItem(THEME_KEY);
+      return v === "light" || v === "dark" ? v : null;
+    } catch { return null; }
   }
 
-  function applyTheme(theme) {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+  function isDark() {
+    const o = getOverride();
+    return o ? o === "dark" : darkMQ.matches;
   }
 
-  function updateResetButton(show) {
-    const resetBtn = document.getElementById("themeReset");
-    if (resetBtn) {
-      if (show) {
-        resetBtn.classList.remove("hidden");
-      } else {
-        resetBtn.classList.add("hidden");
-      }
-    }
+  function apply(override) {
+    const cl = document.documentElement.classList;
+    cl.remove("light", "dark");
+    if (override) cl.add(override);
   }
 
   function init() {
-    // Initialize theme
-    let userTheme;
-    try {
-      userTheme = localStorage?.getItem(THEME_KEY);
-    } catch (e) {
-      userTheme = null;
-    }
+    apply(getOverride());
+    document.getElementById("themeReset")?.classList.toggle("hidden", !getOverride());
 
-    if (userTheme === "light" || userTheme === "dark") {
-      applyTheme(userTheme);
-      updateResetButton(true);
-    } else {
-      // Use system theme
-      applyTheme(getSystemTheme());
-      updateResetButton(false);
-    }
-    // Toggle theme
     document.getElementById("themeToggle")?.addEventListener("click", () => {
-      const isDark = document.documentElement.classList.contains("dark");
-      const newTheme = isDark ? "light" : "dark";
-      applyTheme(newTheme);
-      try {
-        localStorage.setItem(THEME_KEY, newTheme);
-      } catch (e) {
-        // Ignore localStorage errors
-      }
-      updateResetButton(true);
+      const next = isDark() ? "light" : "dark";
+      try { localStorage.setItem(THEME_KEY, next); } catch {}
+      apply(next);
+      document.getElementById("themeReset")?.classList.remove("hidden");
     });
 
-    // Reset to system theme
     document.getElementById("themeReset")?.addEventListener("click", () => {
-      try {
-        localStorage.removeItem(THEME_KEY);
-      } catch (e) {
-        // Ignore localStorage errors
-      }
-      applyTheme(getSystemTheme());
-      updateResetButton(false);
+      try { localStorage.removeItem(THEME_KEY); } catch {}
+      apply(null);
+      document.getElementById("themeReset")?.classList.add("hidden");
     });
   }
 
-  document.addEventListener("DOMContentLoaded", () => init());
-  document.addEventListener("astro:after-swap", () => init());
+  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("astro:after-swap", init);
 </script>
