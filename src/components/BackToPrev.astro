@@ -10,14 +10,8 @@ const { href } = Astro.props;
 
 <a
   href={href}
-  class="relative text-sm group w-fit flex py-1.5 px-2 items-center gap-1 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-200 ease-in-out"
+  class="relative text-sm group w-fit flex py-1.5 px-2 items-center gap-1 flex-nowrap rounded border border-base hover:bg-2 hover:text-primary transition-colors duration-200 ease-in-out"
 >
   <ArrowIcon class="rotate-180" />
   <slot />
 </a>
-
-<script>
-  document
-    .getElementById("back-to-prev")
-    ?.addEventListener("click", () => window.history.back());
-</script>

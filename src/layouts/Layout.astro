@@ -1,4 +1,5 @@
 ---
+import { Github, Linkedin } from "@lucide/astro";
 import BackToTop from "../components/BackToTop.astro";
 import Head from "../components/Head.astro";
 import Link from "../components/Link.astro";
@@ -19,7 +20,7 @@ const CURRENT_YEAR = new Date().getFullYear();
     <Head title={`${title} | rsm.sh`} description={description} />
   </head>
   <body>
-    <header class="fixed top-0 left-0 right-0 z-50 py-5 backdrop-blur-sm">
+    <header class="fixed top-0 left-0 right-0 z-50 py-5 backdrop-blur-sm border-b border-transparent scroll-border transition-colors duration-200">
       <div class="mx-auto max-w-screen-sm px-5">
         <div class="flex flex-wrap gap-y-2 justify-between">
           <Link href="/" underline={false}>
@@ -42,14 +43,35 @@ const CURRENT_YEAR = new Date().getFullYear();
         <BackToTop />
       </div>
     </main>
-    <footer class="py-5 text-sm">
-      <div
-        class="mx-auto max-w-screen-sm px-5"
-      >
-        <div>
-          &copy; {CURRENT_YEAR}
-          {`|`}
-          rsm.sh
+    <footer class="py-8 text-sm border-t border-base">
+      <div class="mx-auto max-w-screen-sm px-5 flex flex-col gap-4">
+        <div class="flex flex-wrap items-center justify-between gap-y-3">
+          <nav class="flex gap-3 text-secondary">
+            <Link href="/blog">blog</Link>
+            <span>/</span>
+            <Link href="/work">work</Link>
+          </nav>
+          <div class="flex gap-3">
+            <a
+              href="https://github.com/ramanmaan"
+              target="_blank"
+              aria-label="Raman Maan on Github"
+              class="text-secondary hover:text-primary transition-colors duration-200"
+            >
+              <Github size={16} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ramanmaan"
+              target="_blank"
+              aria-label="Raman Maan on LinkedIn"
+              class="text-secondary hover:text-primary transition-colors duration-200"
+            >
+              <Linkedin size={16} />
+            </a>
+          </div>
+        </div>
+        <div class="text-secondary">
+          &copy; {CURRENT_YEAR} rsm.sh
         </div>
       </div>
     </footer>

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Github, Linkedin } from "@lucide/astro";
 import ArrowCard from "../components/ArrowCard.astro";
 import Link from "../components/Link.astro";
 import WorkEntryHeader from "../components/WorkEntryHeader.astro";
@@ -31,74 +32,16 @@ const work = await Promise.all(
 
 <Layout title="Home" description="Raman Maan's personal website.">
   <div class="mx-auto max-w-screen-sm px-5">
-    <h4 class="font-semibold">Raman S. Maan</h4>
-    <h5 class="italic text-secondary">pronounced "rum"-"in"</h5>
+    <div class="flex flex-col gap-1 mb-12">
+      <h1 class="text-2xl font-semibold text-primary">Raman S. Maan</h1>
+      <p class="text-sm italic text-secondary">pronounced "rum"-"in"</p>
+      <div class="mt-4 w-8 h-0.5 rounded-full bg-(--color-accent)"></div>
+      <p class="mt-4 text-secondary leading-relaxed">
+        This is a scratch space to play around with ideas and experiments. I
+        might even try and write a blog post or two.
+      </p>
+    </div>
     <div class="flex flex-col gap-16">
-      <section>
-        <article>
-          <p>
-            This is a scratch space to play around with ideas and experiments. I
-            might even try and write a blog post or two.
-          </p>
-        </article>
-      </section>
-
-      <section class="flex flex-col gap-6">
-        <h5 class="font-semibold">Theme Showcase</h5>
-
-        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div class="flex flex-col gap-1.5">
-            <div class="h-10 rounded-md bg-(--color-accent)"></div>
-            <span class="text-xs text-secondary">accent</span>
-          </div>
-          <div class="flex flex-col gap-1.5">
-            <div class="h-10 rounded-md bg-(--color-accent-hover)"></div>
-            <span class="text-xs text-secondary">accent hover</span>
-          </div>
-          <div class="flex flex-col gap-1.5">
-            <div
-              class="h-10 rounded-md border border-(--border-color-base) bg-(--background-color-interactive)"
-            >
-            </div>
-            <span class="text-xs text-secondary">interactive</span>
-          </div>
-          <div class="flex flex-col gap-1.5">
-            <div
-              class="h-10 rounded-md border border-(--border-color-base) bg-(--background-color-base)"
-            >
-            </div>
-            <span class="text-xs text-secondary">base</span>
-          </div>
-        </div>
-
-        <div class="flex flex-wrap gap-3">
-          <button
-            class="rounded-lg bg-(--color-accent) hover:bg-(--color-accent-hover) text-white px-4 py-2 text-sm font-semibold transition-colors"
-          >
-            Primary
-          </button>
-          <button
-            class="rounded-lg border border-(--color-accent) text-(--color-accent) hover:bg-(--color-accent) hover:text-white px-4 py-2 text-sm font-semibold transition-colors"
-          >
-            Outline
-          </button>
-          <button
-            class="rounded-lg bg-(--background-color-interactive) border border-(--border-color-base) text-primary px-4 py-2 text-sm transition-colors hover:brightness-95"
-          >
-            Ghost
-          </button>
-        </div>
-
-        <div
-          class="rounded-lg border border-(--border-color-base) bg-(--background-color-interactive) p-4 flex flex-col gap-2"
-        >
-          <span class="text-primary font-semibold text-sm">Card title — text-color-primary</span>
-          <span class="text-secondary text-sm"
-            >Description — text-color-secondary, derived at 55% alpha from primary.</span
-          >
-          <span class="text-(--color-accent) text-sm font-semibold">Accent link →</span>
-        </div>
-      </section>
 
       <section class="flex flex-col gap-6">
         <div class="flex flex-wrap gap-y-2 items-center justify-between">
@@ -133,29 +76,27 @@ const work = await Promise.all(
       </section>
 
       <section>
-        <ul class="flex flex-wrap gap-(--gap) [--gap:8px]">
-          {
-            [
-              {
-                name: "github",
-                href: "https://github.com/ramanmaan",
-                "aria-label": "Raman Maan on Github",
-              },
-              {
-                name: "linkedin",
-                href: "https://www.linkedin.com/in/ramanmaan",
-                "aria-label": "Raman Maan on LinkedIn",
-              },
-            ].map((props, i, arr) => (
-              <li class="flex gap-x-(--gap) text-nowrap">
-                <Link external {...props}>
-                  {props.name}
-                </Link>
-                {i !== arr.length - 1 && "/"}
-              </li>
-            ))
-          }
-        </ul>
+        <div class="flex gap-3">
+          <a
+            href="https://github.com/ramanmaan"
+            target="_blank"
+            aria-label="Raman Maan on Github"
+            class="flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors duration-200"
+          >
+            <Github size={16} />
+            github
+          </a>
+          <span class="text-secondary">/</span>
+          <a
+            href="https://www.linkedin.com/in/ramanmaan"
+            target="_blank"
+            aria-label="Raman Maan on LinkedIn"
+            class="flex items-center gap-1.5 text-sm text-secondary hover:text-primary transition-colors duration-200"
+          >
+            <Linkedin size={16} />
+            linkedin
+          </a>
+        </div>
       </section>
     </div>
   </div>

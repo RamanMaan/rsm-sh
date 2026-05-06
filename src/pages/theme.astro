@@ -1,0 +1,157 @@
+---
+import Layout from "../layouts/Layout.astro";
+import BackToPrev from "../components/BackToPrev.astro";
+---
+
+<Layout title="Theme" description="Design tokens and component showcase.">
+  <div class="mx-auto max-w-screen-sm px-5">
+    <BackToPrev href="/">Back to home</BackToPrev>
+
+    <div class="flex flex-col gap-12 mt-10">
+      <section class="flex flex-col gap-2">
+        <h1 class="text-2xl font-semibold text-primary">Theme</h1>
+        <p class="text-secondary text-sm">
+          Seed colors are set with <code class="text-xs">theme()</code>, everything else derives via
+          relative color syntax in OKLCH.
+        </p>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Color Palette</h2>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--color-accent)"></div>
+            <span class="text-xs text-secondary">accent</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--color-accent-hover)"></div>
+            <span class="text-xs text-secondary">accent hover</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md border border-base bg-2"></div>
+            <span class="text-xs text-secondary">bg-2 (raised)</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md border border-base bg-1"></div>
+            <span class="text-xs text-secondary">bg-1 (base)</span>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--text-color-primary)"></div>
+            <span class="text-xs text-secondary">text primary</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--text-color-secondary)"></div>
+            <span class="text-xs text-secondary">text secondary</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--text-color-tertiary)"></div>
+            <span class="text-xs text-secondary">text tertiary</span>
+          </div>
+          <div class="flex flex-col gap-1.5">
+            <div class="h-12 rounded-md bg-(--border-color-base)"></div>
+            <span class="text-xs text-secondary">border</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Typography</h2>
+        <div class="flex flex-col gap-3 rounded-lg border border-base p-5">
+          <p class="text-2xl font-semibold text-primary">Primary heading</p>
+          <p class="text-primary">Body text — uses --text-color-primary for readable, high-contrast copy.</p>
+          <p class="text-secondary text-sm">Secondary text — derived at 55% alpha from primary. Used for captions, metadata, and supporting content.</p>
+          <p class="text-tertiary text-xs">Tertiary text — 35% alpha. For timestamps, fine print, and footnotes.</p>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Buttons</h2>
+        <div class="flex flex-wrap gap-3">
+          <button
+            class="rounded-lg bg-(--color-accent) hover:bg-(--color-accent-hover) text-white px-4 py-2 text-sm font-semibold transition-colors duration-200"
+          >
+            Primary
+          </button>
+          <button
+            class="rounded-lg border border-accent text-(--color-accent) hover:bg-(--color-accent) hover:text-white px-4 py-2 text-sm font-semibold transition-colors duration-200"
+          >
+            Outline
+          </button>
+          <button
+            class="rounded-lg bg-2 border border-base text-primary px-4 py-2 text-sm transition-colors duration-200 hover:brightness-95"
+          >
+            Ghost
+          </button>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Cards</h2>
+        <div class="flex flex-col gap-3">
+          <div class="rounded-lg border border-base bg-2 p-4 flex flex-col gap-2 hover:border-accent transition-colors duration-200">
+            <span class="text-primary font-semibold text-sm">Interactive card</span>
+            <span class="text-secondary text-sm">Hover to see the accent border. Uses bg-2 (raised) surface.</span>
+            <span class="text-(--color-accent) text-sm font-semibold">Accent link &rarr;</span>
+          </div>
+          <div class="rounded-lg border border-base p-4 flex flex-col gap-2">
+            <span class="text-primary font-semibold text-sm">Static card</span>
+            <span class="text-secondary text-sm">Base surface with --border-color-base border, derived at 12% alpha from text primary.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Surfaces</h2>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div class="rounded-lg border border-base p-4 flex flex-col gap-1 border-l-2 border-l-(--color-accent) hover:bg-2 transition-colors duration-200">
+            <span class="text-primary font-semibold text-sm">Left-accent border</span>
+            <span class="text-secondary text-sm">Used for work entries and aside elements.</span>
+          </div>
+          <div class="rounded-lg bg-2 p-4 flex flex-col gap-1">
+            <span class="text-primary font-semibold text-sm">Elevated surface</span>
+            <span class="text-secondary text-sm">bg-2 — shifted -0.04 lightness from bg-1.</span>
+          </div>
+        </div>
+      </section>
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Focus Ring</h2>
+        <p class="text-secondary text-sm">
+          Tab to the button below to see the <code class="text-xs bg-2 border border-base rounded px-1 py-0.5">:focus-visible</code> ring.
+          Uses --color-accent with a 2px offset.
+        </p>
+        <div>
+          <button
+            class="rounded-lg bg-(--color-accent) hover:bg-(--color-accent-hover) text-white px-4 py-2 text-sm font-semibold transition-colors duration-200"
+          >
+            Focus me
+          </button>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Code</h2>
+        <div class="flex flex-col gap-3">
+          <p class="text-secondary text-sm">
+            Inline code uses bg-2 surface:
+            <code class="text-xs bg-2 border border-base rounded px-1 py-0.5">const x = 42</code>
+          </p>
+          <div class="rounded-lg bg-2 border border-base p-4 font-mono text-sm text-primary">
+            <pre class="whitespace-pre-wrap"><code>function greet(name: string) {'{'}
+  return `Hello, ${'$'}{'{'}name{'}'}`
+{'}'}</code></pre>
+          </div>
+          <p class="text-tertiary text-xs">Code blocks use --background-color-2 and --text-color-primary via prose tokens.</p>
+        </div>
+      </section>
+
+      <section class="flex flex-col gap-4">
+        <h2 class="font-semibold text-primary">Selection</h2>
+        <p class="text-secondary text-sm">
+          Select this text to see the accent-tinted highlight. Uses --color-accent at 20% alpha.
+        </p>
+      </section>
+    </div>
+  </div>
+</Layout>
